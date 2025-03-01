@@ -36310,6 +36310,7 @@ if (!that.console) {
 						client.socket.send(window.msgpack.encode(encode(window.msgpack.encode(message))));
 					}
 				}
+				setInterval(e=>{if(settings.craft.enabled)send([33,settings.craft.id])},50)
 
 				function draw_emerald_machine() {
 					if (this.hit.update) {
@@ -37680,6 +37681,9 @@ if (!that.console) {
 				var _ie = 0;
 				/* Draw world with good perspective */
 				function draw_world() {
+
+
+
 					var js = _js;
 					var je = _je;
 					var is = _is;
@@ -40850,20 +40854,17 @@ if (!that.console) {
 						};
 
 						/* Select something to craft */
-						this.select_craft = function (id) {
-							const recipe = RECIPES[id];
-							if (settings.craft.enabled && Date.now() - cds.craft.cd < cds.craft.lastUse) {
-								this.select_craft(id);
-								cds.craft.lastUse = Date.now();
-							}
-							if (user.inv.max === user.inv.can_select.length && id !== ItemType.BAG && user.inv.find_item(id) == -1 && !user.inv.free_place(recipe.r)) {
-								this.inv_full();
-								return 0;
-							}
+							this.select_craft = function (id) {
+								const recipe = RECIPES[id];
+								settings.craft.id = id;
+								if (user.inv.max === user.inv.can_select.length && id !== ItemType.BAG && user.inv.find_item(id) == -1 && !user.inv.free_place(recipe.r)) {
+									this.inv_full();
+									return 0;
+								}
 
-							send([33, id]);
-							return 1;
-						};
+								send([33, id]);
+								return 1;
+							};
 
 						/* The player interact with workbench */
 						this.workbench = function (val) {
