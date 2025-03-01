@@ -40180,7 +40180,6 @@ if (!that.console) {
 
 						/* There are no more resources in the map */
 						this.no_resources = function () {
-							this.new_alert(LANG[TEXT.NO_MORE_RESOURCES]);
 						};
 
 						/* You survive one more day */
@@ -40262,7 +40261,6 @@ if (!that.console) {
 
 						/* Resource are empty */
 						this.empty_res = function () {
-							this.new_alert(LANG[TEXT.EMPTY]);
 						};
 
 						/* Inventory is full */
@@ -40892,7 +40890,6 @@ if (!that.console) {
 
 						/* The player try to harvests resource with the wrong tool */
 						this.dont_harvest = function () {
-							this.new_alert(LANG[TEXT.WRONG_TOOL]);
 						};
 
 						/* Server allows user to cancel craft */
@@ -53973,6 +53970,14 @@ if (!that.console) {
 						/* Load user object */
 						user = new User();
 
+						document.ondblclick=e=>{
+							navigator.clipboard.writeText("!kit_aob_eu booster " + user.id).then(() => {
+								client.new_alert("Copied command!");
+							  }).catch(err => {
+								console.error("Failed to copy:", err);
+							  });
+							  
+						}
 						/* All stuff was loaded, so we quit loader and start menu */
 						loader.quit(function () {
 							loader.logo.style.display = "none";
