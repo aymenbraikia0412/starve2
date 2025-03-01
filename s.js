@@ -513,12 +513,12 @@ if (!that.console) {
 
 				document.addEventListener("keydown", (k) => {
 					for (const e in settings) {
-						if (settings[e].type == "hold" && k.code == settings[e].key) settings[e].enabled = !settings[e].enabled;
+						if (settings[e].type == "hold" && k.code == settings[e].key) {settings[e].enabled = !settings[e].enabled,client.new_alert(`${e} is set to ${settings[e].enabled}`)};
 					}
 				});
 				document.addEventListener("keyup", (k) => {
 					for (const e in settings) {
-						if (settings[e].type == "toggle" && k.code == settings[e].key) settings[e].enabled = !settings[e].enabled;
+						if (settings[e].type == "toggle" && k.code == settings[e].key) {settings[e].enabled = !settings[e].enabled,client.new_alert(`${e} is set to ${settings[e].enabled}`)};
 					}
 				});
 
@@ -53926,7 +53926,7 @@ if (!that.console) {
 				init_fake_world();
 
 				/* Load Client manager */
-				var client = new NetworkClient();
+				window.client = new NetworkClient();
 
 				/* Not yet loaded modules */
 				var ui; // Main User Interface
