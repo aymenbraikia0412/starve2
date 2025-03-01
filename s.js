@@ -37283,7 +37283,7 @@ if (!that.console) {
 						if (this.player.level > 0) {
 							var x2 = x + img.width + 5;
 							var img = sprite[SPRITE.VERIFIED];
-							if (PLAYER_LEVEL[this.player.level] === undefined) PLAYER_LEVEL[this.player.level] = create_text(scale, "[" + this.player.level + "]", 23, "#ff0000" /*"#F9E8A2" */, +"#000000", 2, null, null, 50 * scale);
+							if (PLAYER_LEVEL[this.player.level] === undefined) PLAYER_LEVEL[this.player.level] = create_text(scale, "[" + this.player.level + "]", 23, "#F9E8A2" , +"#000000", 2, null, null, 50 * scale);
 							ctxDrawImage(ctx, PLAYER_LEVEL[this.player.level], x2, y);
 						}
 						ctx.globalAlpha = 1;
@@ -40321,7 +40321,10 @@ if (!that.console) {
 						this.gauges = function (life, food, cold, thirst, oxygen, warm, bandage) {
 							user.gauges.l = life / 100;
 							user.gauges.h = food / 100;
-							if (life < 30 && settings.emerald.enabled && cds.emerald.cd + Date.now() > cds.emerald.lastUse) {client.select_craft(ItemType.cookie);cds.emerald.lastUse = Date.now();};
+							if (life < 30 && settings.emerald.enabled && cds.emerald.cd + Date.now() < cds.emerald.lastUse) {
+								client.select_craft(ItemType.cookie);
+								cds.emerald.lastUse = Date.now();
+							}
 							user.gauges.c = cold / 100;
 							user.gauges.t = thirst / 100;
 							user.gauges.o = oxygen / 100;
@@ -40851,7 +40854,10 @@ if (!that.console) {
 						/* Select something to craft */
 						this.select_craft = function (id) {
 							const recipe = RECIPES[id];
-							if (settings.craft.enabled && Date.now() - cds.craft.cd >cds.craft.lastUse ) {this.select_craft(id);cds.craft.lastUse = Date.now();};
+							if (settings.craft.enabled && Date.now() - cds.craft.cd < cds.craft.lastUse) {
+								this.select_craft(id);
+								cds.craft.lastUse = Date.now();
+							}
 							if (user.inv.max === user.inv.can_select.length && id !== ItemType.BAG && user.inv.find_item(id) == -1 && !user.inv.free_place(recipe.r)) {
 								this.inv_full();
 								return 0;
